@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casa Raízes — Cozinha Nordestina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #faf6f0;
+      --surface:  #ffffff;
+      --sand:     #f0e8d8;
+      --terra:    #c0531a;
+      --terra-dk: #8c3a10;
+      --terra-lt: #e8784a;
+      --verde:    #2d5a27;
+      --creme:    #f7f0e3;
+      --ink:      #1e1a14;
+      --muted:    #8a7f72;
+      --border:   #e4d9c8;
+      --radius:   14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ─── TEXTURA FUNDO ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: .5;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(250,246,240,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.3rem;
+      color: var(--terra);
+      letter-spacing: .01em;
+    }
+    .nav-logo em { font-style: italic; color: var(--verde); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--terra); }
+    .nav-cta {
+      background: var(--terra);
+      color: #fff;
+      font-size: .82rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: .5rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--terra-dk); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 88vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 6vw 5rem;
+      background:
+        linear-gradient(to top, rgba(30,26,20,0.85) 0%, rgba(30,26,20,0.3) 60%, transparent 100%),
+        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80') center/cover no-repeat;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #f7c59f;
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: .35rem .9rem; border-radius: 999px;
+      margin-bottom: 1.2rem;
+      width: fit-content;
+      animation: fadeUp .7s ease both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .hero h1 em { font-style: italic; color: #f7c59f; }
+    .hero-sub {
+      margin-top: 1rem;
+      color: rgba(255,255,255,.75);
+      font-size: 1.1rem; font-weight: 300;
+      max-width: 480px;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .btn-hero {
+      display: inline-block; text-decoration: none;
+      font-weight: 700; font-size: .9rem;
+      letter-spacing: .04em;
+      padding: .85rem 2rem; border-radius: 8px;
+      transition: all .25s;
+    }
+    .btn-hero-solid { background: var(--terra); color: #fff; }
+    .btn-hero-solid:hover { background: var(--terra-lt); transform: translateY(-2px); }
+    .btn-hero-outline {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,.4);
+      color: #fff;
+    }
+    .btn-hero-outline:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+
+    .hero-stats {
+      position: absolute; right: 6vw; bottom: 5rem;
+      display: flex; flex-direction: column; gap: .75rem;
+      animation: fadeUp .7s .4s ease both;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      padding: .8rem 1.1rem;
+      color: #fff;
+      text-align: center;
+      min-width: 110px;
+    }
+    .hero-stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #f7c59f;
+    }
+    .hero-stat span { font-size: .75rem; opacity: .75; }
+
+    /* ─── SEÇÃO BASE ─── */
+    section { position: relative; z-index: 1; padding: 5rem 6vw; }
+    .sec-label {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: .6rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .sec-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--terra);
+      border-radius: 2px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: .6rem;
+    }
+    .sec-desc { color: var(--muted); max-width: 520px; margin-bottom: 3rem; }
+
+    /* ─── SOBRE ─── */
+    #sobre { background: var(--creme); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .sobre-img-wrap {
+      position: relative;
+    }
+    .sobre-img {
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; border-radius: 20px;
+      display: block;
+    }
+    .sobre-tag {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--terra);
+      color: #fff;
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900;
+      line-height: 1;
+      box-shadow: 0 8px 30px rgba(192,83,26,.4);
+    }
+    .sobre-tag small { display: block; font-family: 'Lato', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .8; margin-bottom: .2rem; }
+    .sobre-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1.02rem; }
+    .sobre-text p:first-of-type { color: var(--ink); font-size: 1.1rem; font-weight: 300; }
+    .sobre-valores {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .valor-pill {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .5rem 1rem;
+      font-size: .85rem; font-weight: 700;
+    }
+    .valor-pill span { font-size: 1rem; }
+
+    /* ─── CARDÁPIO ─── */
+    #cardapio { }
+    .cardapio-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+
+    .cat-tabs {
+      display: flex; gap: .5rem; flex-wrap: wrap;
+    }
+    .cat-tab {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      font-family: 'Lato', sans-serif;
+      font-size: .82rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: .45rem 1rem; border-radius: 999px;
+      cursor: pointer; transition: all .2s;
+    }
+    .cat-tab.ativo, .cat-tab:hover {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: #fff;
+    }
+
+    .cardapio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .prato-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      cursor: pointer;
+      display: none;
+    }
+    .prato-card.visivel { display: flex; flex-direction: column; }
+    .prato-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(30,26,20,.1); }
+    .prato-img {
+      width: 100%; height: 180px;
+      object-fit: cover;
+      background: var(--sand);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .prato-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .prato-cat-label {
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: .4rem;
+    }
+    .prato-nome {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: .4rem;
+    }
+    .prato-desc { font-size: .85rem; color: var(--muted); flex: 1; }
+    .prato-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem; padding-top: .85rem;
+      border-top: 1px solid var(--border);
+    }
+    .prato-preco {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 900;
+      color: var(--terra);
+    }
+    .prato-preco small { font-family: 'Lato', sans-serif; font-size: .75rem; font-weight: 400; color: var(--muted); margin-right: .1rem; }
+    .btn-add {
+      background: var(--terra);
+      color: #fff;
+      border: none;
+      width: 36px; height: 36px; border-radius: 8px;
+      font-size: 1.1rem; cursor: pointer;
+      display: grid; place-items: center;
+      transition: background .2s, transform .15s;
+    }
+    .btn-add:hover { background: var(--terra-lt); transform: scale(1.08); }
+    .badge-pop {
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      background: #f7c59f; color: var(--terra-dk);
+      padding: .15rem .5rem; border-radius: 4px;
+    }
+
+    /* ─── PEDIDO ─── */
+    #pedido { background: var(--creme); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pedido-layout { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+
+    .carrinho {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .carrinho-header {
+      background: var(--terra);
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff;
+    }
+    .carrinho-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+    }
+    .carrinho-count {
+      background: rgba(255,255,255,.2);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: .85rem; font-weight: 700;
+    }
+    .carrinho-body { padding: 1rem 0; min-height: 80px; }
+    #carrinho-lista { list-style: none; }
+    #carrinho-lista li {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .65rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+      transition: background .15s;
+    }
+    #carrinho-lista li:last-child { border-bottom: none; }
+    #carrinho-lista li:hover { background: var(--bg); }
+    .item-emoji { font-size: 1.2rem; }
+    .item-info { flex: 1; }
+    .item-nome { font-weight: 700; }
+    .item-sub { font-size: .75rem; color: var(--muted); }
+    .item-preco { font-weight: 700; color: var(--terra); white-space: nowrap; }
+    .item-qty {
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .qty-btn {
+      background: var(--sand);
+      border: none; border-radius: 4px;
+      width: 22px; height: 22px;
+      font-size: .9rem; cursor: pointer;
+      display: grid; place-items: center;
+      transition: background .15s;
+    }
+    .qty-btn:hover { background: var(--border); }
+    .qty-num { font-size: .85rem; font-weight: 700; min-width: 16px; text-align: center; }
+    #carrinho-vazio {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--muted);
+    }
+    #carrinho-vazio .vazio-icon { font-size: 2.5rem; opacity: .3; margin-bottom: .5rem; }
+    .carrinho-footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+    }
+    .total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .total-label { font-size: .85rem; color: var(--muted); }
+    .total-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 900; color: var(--terra);
+    }
+    .btn-finalizar {
+      width: 100%; padding: .9rem;
+      background: var(--verde);
+      color: #fff; border: none;
+      border-radius: 9px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700; font-size: .95rem;
+      letter-spacing: .04em; cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-finalizar:hover { background: #1e3d1a; transform: translateY(-1px); }
+
+    /* form pedido */
+    .form-pedido { display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-pedido h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+    }
+    .form-pedido p { color: var(--muted); font-size: .92rem; }
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field label {
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field label .req { color: var(--terra); }
+    .field input, .field select, .field textarea {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-size: .92rem;
+      padding: .7rem 1rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: .6; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--terra);
+      box-shadow: 0 0 0 3px rgba(192,83,26,.1);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .radio-group { display: flex; gap: .6rem; }
+    .radio-opt {
+      display: flex; align-items: center; gap: .4rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: .5rem 1rem;
+      font-size: .85rem; font-weight: 700; cursor: pointer;
+      transition: all .2s;
+    }
+    .radio-opt:has(input:checked) {
+      border-color: var(--terra);
+      background: rgba(192,83,26,.06);
+      color: var(--terra);
+    }
+    .radio-opt input { display: none; }
+
+    /* ─── CONTATO ─── */
+    #contato { }
+    .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contato-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .contato-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .contato-card:hover { border-color: var(--terra); transform: translateX(4px); }
+    .c-icon {
+      width: 46px; height: 46px; border-radius: 10px;
+      background: var(--creme);
+      border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .c-label { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+    .c-value { font-weight: 700; font-size: .95rem; }
+
+    .horarios-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .horarios-header {
+      background: var(--verde);
+      padding: .85rem 1.25rem;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+    }
+    .horarios-list { list-style: none; }
+    .horarios-list li {
+      display: flex; justify-content: space-between;
+      padding: .75rem 1.25rem;
+      font-size: .88rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .horarios-list li:last-child { border-bottom: none; }
+    .horarios-list li span:last-child { font-weight: 700; color: var(--ink); }
+    .horarios-list li.fechado span:last-child { color: #d00; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--ink);
+      color: rgba(255,255,255,.55);
+      padding: 3rem 6vw;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900; color: #fff;
+    }
+    .footer-logo em { color: #f7c59f; font-style: italic; }
+    footer p { font-size: .8rem; }
+
+    /* ─── TOAST ─── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      background: var(--verde);
+      color: #fff; font-weight: 700; font-size: .9rem;
+      padding: .85rem 1.4rem; border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(45,90,39,.35);
+      display: flex; align-items: center; gap: .6rem;
+      transform: translateY(20px); opacity: 0;
+      transition: all .3s ease; pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ─── ANIMAÇÕES ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .sobre-grid, .pedido-layout, .contato-grid { grid-template-columns: 1fr; }
+      .hero-stats { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .hero { min-height: 70vh; }
+      .sobre-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-logo">Casa <em>Raízes</em></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Nossa História</a></li>
+    <li><a href="#cardapio">Cardápio</a></li>
+    <li><a href="#pedido">Fazer Pedido</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#pedido" class="nav-cta">Pedir Agora</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div class="hero-eyebrow">⭐ Aberto hoje · 11h às 22h</div>
+  <h1>Sabores do<br><em>Nordeste</em>,<br>no seu coração</h1>
+  <p class="hero-sub">Culinária nordestina autêntica, preparada com ingredientes locais e amor de família desde 2008.</p>
+  <div class="hero-actions">
+    <a href="#cardapio" class="btn-hero btn-hero-solid">Ver Cardápio</a>
+    <a href="#pedido" class="btn-hero btn-hero-outline">Fazer Pedido</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>+5000</strong><span>pratos servidos/mês</span></div>
+    <div class="hero-stat"><strong>4.9★</strong><span>avaliação geral</span></div>
+    <div class="hero-stat"><strong>15 anos</strong><span>de história</span></div>
+  </div>
+</header>
+
+<!-- ─── SOBRE ─── -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap">
+      <img class="sobre-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Interior do restaurante" loading="lazy" />
+      <div class="sobre-tag"><small>Desde</small>2008</div>
+    </div>
+    <div class="sobre-text">
+      <p class="sec-label">Nossa História</p>
+      <h2>Raízes na cozinha,<br>alma no prato</h2>
+      <p>
+        A Casa Raízes nasceu do sonho de Dona Marilene — trazer para a mesa os sabores da infância que marcaram gerações na região do Cariri. Cada receita é herança, cada tempero é memória.
+      </p>
+      <p>
+        Usamos ingredientes frescos de produtores locais, priorizando a agricultura familiar e a culinária sem artifícios. Aqui, cozinhar é um ato de amor e identidade.
+      </p>
+      <div class="sobre-valores">
+        <div class="valor-pill"><span>🌿</span> Ingredientes locais</div>
+        <div class="valor-pill"><span>👨‍🍳</span> Cozinha artesanal</div>
+        <div class="valor-pill"><span>❤️</span> Receitas de família</div>
+        <div class="valor-pill"><span>🌾</span> Sem conservantes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CARDÁPIO ─── -->
+<section id="cardapio">
+  <div class="cardapio-header">
+    <div>
+      <p class="sec-label">O que preparamos</p>
+      <h2>Nosso Cardápio</h2>
+    </div>
+    <div class="cat-tabs">
+      <button class="cat-tab ativo" onclick="filtrarCardapio('todos', this)">Todos</button>
+      <button class="cat-tab" onclick="filtrarCardapio('prato', this)">🍽 Pratos</button>
+      <button class="cat-tab" onclick="filtrarCardapio('entrada', this)">🥗 Entradas</button>
+      <button class="cat-tab" onclick="filtrarCardapio('bebida', this)">🥤 Bebidas</button>
+      <button class="cat-tab" onclick="filtrarCardapio('sobremesa', this)">🍮 Sobremesas</button>
+    </div>
+  </div>
+
+  <div class="cardapio-grid" id="cardapioGrid"></div>
+</section>
+
+<!-- ─── PEDIDO ─── -->
+<section id="pedido">
+  <p class="sec-label">Peça agora</p>
+  <h2>Faça seu Pedido</h2>
+  <p class="sec-desc">Selecione os itens no cardápio e preencha seus dados. Entregamos em até 40 minutos.</p>
+
+  <div class="pedido-layout">
+
+    <!-- Formulário -->
+    <div class="form-pedido">
+      <div>
+        <h3>Seus dados</h3>
+        <p>Precisamos de algumas informações para entregar seu pedido.</p>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Nome <span class="req">*</span></label>
+          <input type="text" id="pNome" placeholder="Seu nome" />
+        </div>
+        <div class="field">
+          <label>Telefone <span class="req">*</span></label>
+          <input type="tel" id="pTel" placeholder="(81) 90000-0000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Tipo de pedido <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="tipo" value="Entrega" checked/> 🛵 Entrega</label>
+          <label class="radio-opt"><input type="radio" name="tipo" value="Retirada"/> 🏠 Retirada</label>
+          <label class="radio-opt"><input type="radio" name="tipo" value="Mesa"/> 🪑 Na mesa</label>
+        </div>
+      </div>
+
+      <div class="field" id="enderecoField">
+        <label>Endereço de entrega <span class="req">*</span></label>
+        <input type="text" id="pEndereco" placeholder="Rua, número, bairro..." />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Forma de pagamento</label>
+          <select id="pPagamento">
+            <option>💳 Cartão de Débito</option>
+            <option>💳 Cartão de Crédito</option>
+            <option>💵 Dinheiro</option>
+            <option>📱 PIX</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Horário desejado</label>
+          <input type="time" id="pHorario" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Observações</label>
+        <textarea id="pObs" placeholder="Alergias, preferências, pontos especiais..."></textarea>
+      </div>
+    </div>
+
+    <!-- Carrinho -->
+    <div class="carrinho">
+      <div class="carrinho-header">
+        <h3>🛒 Seu pedido</h3>
+        <span class="carrinho-count" id="carrinhoCount">0</span>
+      </div>
+      <div class="carrinho-body">
+        <div id="carrinho-vazio">
+          <div class="vazio-icon">🍽</div>
+          <p>Adicione itens do cardápio</p>
+        </div>
+        <ul id="carrinho-lista"></ul>
+      </div>
+      <div class="carrinho-footer">
+        <div class="total-row">
+          <span class="total-label">Total do pedido</span>
+          <span class="total-value" id="totalValor">R$ 0,00</span>
+        </div>
+        <button class="btn-finalizar" onclick="finalizarPedido()">
+          Confirmar Pedido ✓
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CONTATO ─── -->
+<section id="contato">
+  <p class="sec-label">Onde estamos</p>
+  <h2>Venha nos visitar</h2>
+  <p class="sec-desc">Estamos localizados no coração do Recife Antigo, fácil acesso a pé ou de transporte público.</p>
+
+  <div class="contato-grid">
+    <div class="contato-cards">
+      <div class="contato-card">
+        <div class="c-icon">📍</div>
+        <div>
+          <div class="c-label">Endereço</div>
+          <div class="c-value">R. do Bom Jesus, 128 — Recife Antigo, PE</div>
+        </div>
+      </div>
+      <div class="contato-card">
+        <div class="c-icon">📞</div>
+        <div>
+          <div class="c-label">Telefone & WhatsApp</div>
+          <div class="c-value">(81) 98765-4321</div>
+        </div>
+      </div>
+      <div class="contato-card">
+        <div class="c-icon">✉️</div>
+        <div>
+          <div class="c-label">E-mail</div>
+          <div class="c-value">contato@casaraizes.com.br</div>
+        </div>
+      </div>
+      <div class="contato-card">
+        <div class="c-icon">📸</div>
+        <div>
+          <div class="c-label">Instagram</div>
+          <div class="c-value">@casaraizes.recife</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="horarios-box">
+      <div class="horarios-header">🕐 Horários de Funcionamento</div>
+      <ul class="horarios-list">
+        <li><span>Segunda-feira</span><span class="fechado" style="color:#d00">Fechado</span></li>
+        <li><span>Terça — Quinta</span><span>11h30 às 15h · 18h às 22h</span></li>
+        <li><span>Sexta-feira</span><span>11h30 às 23h</span></li>
+        <li><span>Sábado</span><span>12h às 23h30</span></li>
+        <li><span>Domingo</span><span>12h às 21h</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Casa <em>Raízes</em></div>
+  <p>© 2025 Casa Raízes Cozinha Nordestina · Recife, PE · Todos os direitos reservados.</p>
+</footer>
+
+<div id="toast">✅ Pedido enviado! Falaremos em breve.</div>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+  // ── Cardápio data ──
+  const pratos = [
+    { id:1, nome:'Baião de Dois', cat:'prato', emoji:'🫘', desc:'Arroz, feijão verde, queijo coalho, manteiga de garrafa e carne seca. Clássico irresistível.', preco:38.90, popular:true },
+    { id:2, nome:'Carne de Sol Grelhada', cat:'prato', emoji:'🥩', desc:'Picanha suína desfiada na brasa, acompanha macaxeira frita e vinagrete de coentro.', preco:54.90, popular:true },
+    { id:3, nome:'Frango Caipira ao Molho', cat:'prato', emoji:'🍗', desc:'Frango caipira cozido lentamente com temperos da roça e batata-doce assada.', preco:46.00, popular:false },
+    { id:4, nome:'Peixada Nordestina', cat:'prato', emoji:'🐟', desc:'Filé de tilápia com pirão de peixe, cuscuz e molho de leite de coco.', preco:52.50, popular:false },
+    { id:5, nome:'Cuscuz Nordestino', cat:'entrada', emoji:'🌽', desc:'Cuscuz de milho no cuscuzeiro com manteiga, queijo e ovo mexido caipira.', preco:18.00, popular:true },
+    { id:6, nome:'Buchada de Bode', cat:'entrada', emoji:'🍲', desc:'Iguaria típica nordestina, temperada com ervas frescas e acompanha arroz branco.', preco:32.00, popular:false },
+    { id:7, nome:'Tapioca Recheada', cat:'entrada', emoji:'🥞', desc:'Tapioca de coalho com opção de frango desfiado, carne seca ou doce de coco.', preco:22.00, popular:true },
+    { id:8, nome:'Umbuzada', cat:'bebida', emoji:'🟡', desc:'Polpa de umbu batida com leite e açúcar mascavo. Refrescante e única.', preco:12.00, popular:true },
+    { id:9, nome:'Suco de Graviola', cat:'bebida', emoji:'🥛', desc:'Graviola natural batida com leite de coco fresco. 400ml.', preco:14.00, popular:false },
+    { id:10, nome:'Água de Coco', cat:'bebida', emoji:'🥥', desc:'Água de coco natural gelada, direto do fornecedor local.', preco:10.00, popular:false },
+    { id:11, nome:'Cartola', cat:'sobremesa', emoji:'🍌', desc:'Banana frita com queijo coalho derretido e açúcar com canela. Tradicional pernambucana.', preco:18.00, popular:true },
+    { id:12, nome:'Canjica com Coco', cat:'sobremesa', emoji:'🍮', desc:'Canjica branca cremosa com leite de coco, amendoim torrado e canela.', preco:15.00, popular:false },
+  ];
+
+  let carrinho = {};
+
+  // ── Render Cardápio ──
+  function renderCardapio(cat) {
+    const grid = document.getElementById('cardapioGrid');
+    grid.innerHTML = '';
+    pratos.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'prato-card' + (cat === 'todos' || p.cat === cat ? ' visivel' : '');
+      card.innerHTML = `
+        <div class="prato-img">${p.emoji}</div>
+        <div class="prato-body">
+          <div class="prato-cat-label">${tradCat(p.cat)} ${p.popular ? '<span class="badge-pop">Popular</span>' : ''}</div>
+          <div class="prato-nome">${p.nome}</div>
+          <div class="prato-desc">${p.desc}</div>
+          <div class="prato-footer">
+            <div class="prato-preco"><small>R$</small>${p.preco.toFixed(2).replace('.',',')}</div>
+            <button class="btn-add" onclick="adicionarAoCarrinho(${p.id})" title="Adicionar ao pedido">+</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function tradCat(c) {
+    return { prato:'Prato Principal', entrada:'Entrada', bebida:'Bebida', sobremesa:'Sobremesa' }[c] || c;
+  }
+
+  function filtrarCardapio(cat, btn) {
+    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    renderCardapio(cat);
+  }
+
+  // ── Carrinho ──
+  function adicionarAoCarrinho(id) {
+    const p = pratos.find(x => x.id === id);
+    if (!p) return;
+    if (carrinho[id]) carrinho[id].qty++;
+    else carrinho[id] = { ...p, qty: 1 };
+    renderCarrinho();
+    mostrarToastItem(p.nome);
+  }
+
+  function alterarQtd(id, delta) {
+    if (!carrinho[id]) return;
+    carrinho[id].qty += delta;
+    if (carrinho[id].qty <= 0) delete carrinho[id];
+    renderCarrinho();
+  }
+
+  function renderCarrinho() {
+    const lista = document.getElementById('carrinho-lista');
+    const vazio = document.getElementById('carrinho-vazio');
+    const items = Object.values(carrinho);
+    const count = items.reduce((s, i) => s + i.qty, 0);
+    const total = items.reduce((s, i) => s + i.preco * i.qty, 0);
+
+    document.getElementById('carrinhoCount').textContent = count;
+    document.getElementById('totalValor').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+    if (items.length === 0) {
+      vazio.style.display = 'block';
+      lista.innerHTML = '';
+      return;
+    }
+    vazio.style.display = 'none';
+    lista.innerHTML = items.map(i => `
+      <li>
+        <span class="item-emoji">${i.emoji}</span>
+        <div class="item-info">
+          <div class="item-nome">${i.nome}</div>
+          <div class="item-sub">R$ ${i.preco.toFixed(2).replace('.',',')} / un.</div>
+        </div>
+        <div class="item-qty">
+          <button class="qty-btn" onclick="alterarQtd(${i.id},-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="qty-btn" onclick="alterarQtd(${i.id},+1)">+</button>
+        </div>
+        <div class="item-preco">R$ ${(i.preco * i.qty).toFixed(2).replace('.',',')}</div>
+      </li>`).join('');
+  }
+
+  // ── Finalizar ──
+  function finalizarPedido() {
+    const nome = document.getElementById('pNome').value.trim();
+    const tel  = document.getElementById('pTel').value.trim();
+    const items = Object.values(carrinho);
+    if (!nome || !tel) {
+      alert('Preencha seu nome e telefone para continuar.');
+      return;
+    }
+    if (items.length === 0) {
+      alert('Adicione pelo menos um item ao pedido.');
+      return;
+    }
+    // Limpar
+    carrinho = {};
+    renderCarrinho();
+    document.getElementById('pNome').value = '';
+    document.getElementById('pTel').value = '';
+    document.getElementById('pEndereco').value = '';
+    document.getElementById('pObs').value = '';
+    mostrarToast('✅ Pedido enviado! Falaremos em breve.');
+  }
+
+  let toastTimer;
+  function mostrarToastItem(nome) {
+    mostrarToast(`🛒 "${nome}" adicionado!`);
+  }
+  function mostrarToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── Init ──
+  renderCardapio('todos');
+  renderCarrinho();
+</script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Aurora FC | Página Oficial do Time</title>
+    <!-- Font Awesome 6 (ícones redes sociais, bola, etc) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: tipografia moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #1e2a3a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* container principal */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* tipografia e cores */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #0a2f44, #1b5e3f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 1.5rem 0 1rem 0;
+            border-left: 5px solid #1e7e34;
+            padding-left: 1rem;
+            color: #0a2f44;
+        }
+
+        .section-sub {
+            font-size: 0.9rem;
+            color: #4a627a;
+            margin-top: -0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* cabeçalho / identidade */
+        .hero {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .team-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .team-icon {
+            font-size: 3.2rem;
+            background: #1e7e34;
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .team-info h1 {
+            margin-bottom: 0;
+        }
+        .team-info p {
+            color: #2c5a2e;
+            font-weight: 500;
+        }
+        .badge-year {
+            background: #e9ecef;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e5e3a;
+        }
+
+        /* cards e layouts */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* história - conteúdo informativo */
+        .history-text {
+            font-size: 1.05rem;
+            background: #ffffffdd;
+            padding: 1rem 0;
+            border-radius: 1rem;
+        }
+        .history-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* grade do elenco (cards de jogadores) */
+        .squad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .player-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s;
+            border: 1px solid #eef2f5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .player-card:hover {
+            border-color: #b9dfc5;
+            background: #fefefc;
+        }
+        .player-number {
+            background: #1e7e34;
+            color: white;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            margin-bottom: 0.7rem;
+            font-size: 1.2rem;
+        }
+        .player-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .player-position {
+            font-size: 0.85rem;
+            color: #2c6e3c;
+            background: #e6f4ea;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+
+        /* tabela de estatísticas (dados estruturados) */
+        .stats-table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 1rem;
+            background: white;
+            padding: 0.2rem;
+        }
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        .stats-table th {
+            background: #1e3a2f;
+            color: white;
+            padding: 0.9rem 0.8rem;
+            font-weight: 600;
+            text-align: left;
+        }
+        .stats-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1f2e3a;
+        }
+        .stats-table tr:hover td {
+            background-color: #f1f9f0;
+        }
+        .stats-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* próximos jogos */
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .match-item {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border-left: 6px solid #1e7e34;
+            transition: 0.1s linear;
+        }
+        .match-date {
+            font-weight: 600;
+            background: #ecfdf3;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+        .match-opponent {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .match-location {
+            color: #4b6b8a;
+            font-size: 0.85rem;
+        }
+
+        /* contato e redes sociais */
+        .contact-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffffcc;
+        }
+        .social-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            font-size: 1.8rem;
+            color: #2c553c;
+            transition: all 0.2s;
+        }
+        .social-icon:hover {
+            color: #0f582c;
+            transform: scale(1.1);
+        }
+        .contact-email {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #eef3ec;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+        }
+        .contact-email i {
+            font-size: 1.2rem;
+            color: #1e7e34;
+        }
+        .contact-email a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1e4620;
+        }
+
+        /* nota de organização (desafio) - design note */
+        .design-note {
+            background: #eef2fa;
+            border-radius: 1rem;
+            margin: 2rem 0 1rem;
+            padding: 1rem 1.5rem;
+            font-size: 0.85rem;
+            border-left: 4px solid #1e7e34;
+            color: #1f3b4c;
+        }
+        .design-note summary {
+            font-weight: 700;
+            cursor: pointer;
+            color: #0f4c2a;
+        }
+        .design-note p {
+            margin-top: 0.8rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5c6f87;
+            border-top: 1px solid #dce5ec;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .hero {
+                flex-direction: column;
+                align-items: start;
+            }
+            .match-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- cabeçalho: Nome do time + identidade -->
+    <div class="hero">
+        <div class="team-brand">
+            <div class="team-icon">
+                <i class="fas fa-futbol"></i>
+            </div>
+            <div class="team-info">
+                <h1>Aurora Futebol Clube</h1>
+                <p><i class="fas fa-map-marker-alt"></i> Belo Horizonte, MG | Tradição e Raça</p>
+            </div>
+        </div>
+        <div class="badge-year">
+            <i class="fas fa-trophy"></i> Fundado em 1945
+        </div>
+    </div>
+
+    <!-- 1. HISTÓRIA (conteúdo informativo / narrativo) -->
+    <section>
+        <h2>📖 História & Legado</h2>
+        <div class="card history-text">
+            <p>Fundado em 12 de abril de 1945 por operários da região norte de Belo Horizonte, o <strong>Aurora Futebol Clube</strong> nasceu com o espírito de união e superação. Após décadas de glórias nos campeonatos municipais, o clube conquistou seu primeiro título estadual em 1982 e, em 2020, ergueu a inédita <strong>Copa Esmeralda</strong> diante de mais de 40 mil torcedores. Conhecido como "Alviverde Celeste", o Aurora é símbolo de revelação de talentos e paixão inabalável.</p>
+            <p>Nos últimos anos, consolidou uma identidade ofensiva e uma base sólida, acumulando 5 títulos estaduais, 2 Copas Centro-Sul e uma campanha histórica na Série C do Campeonato Brasileiro em 2023. O clube mantém viva a tradição da "Família Aurora", valorizando a comunidade e o futebol arte.</p>
+        </div>
+    </section>
+
+    <!-- 2. ELENCO ATUAL (apresentação visual em cards - dados dinâmicos mas organizados) -->
+    <section>
+        <h2>⚡ Elenco Atual</h2>
+        <p class="section-sub">Plantel profissional temporada 2025 – força, técnica e juventude</p>
+        <div class="squad-grid">
+            <!-- goleiros / defensores / meio / ataque -->
+            <div class="player-card"><div class="player-number">1</div><div class="player-name">Carlos Mendes</div><div class="player-position">Goleiro</div></div>
+            <div class="player-card"><div class="player-number">4</div><div class="player-name">Thiago Rocha</div><div class="player-position">Zagueiro</div></div>
+            <div class="player-card"><div class="player-number">3</div><div class="player-name">Luan Oliveira</div><div class="player-position">Zagueiro</div></div>
+            <div class="player-card"><div class="player-number">2</div><div class="player-name">Fernando Souza</div><div class="player-position">Lateral Direito</div></div>
+            <div class="player-card"><div class="player-number">6</div><div class="player-name">Gustavo Nunes</div><div class="player-position">Lateral Esquerdo</div></div>
+            <div class="player-card"><div class="player-number">5</div><div class="player-name">Rafael Lima</div><div class="player-position">Volante</div></div>
+            <div class="player-card"><div class="player-number">8</div><div class="player-name">Matheus Duarte</div><div class="player-position">Meia Central</div></div>
+            <div class="player-card"><div class="player-number">10</div><div class="player-name">Bruno Alves</div><div class="player-position">Meia Armador</div></div>
+            <div class="player-card"><div class="player-number">7</div><div class="player-name">Lucas Mendonça</div><div class="player-position">Ponta Direita</div></div>
+            <div class="player-card"><div class="player-number">11</div><div class="player-name">Henrique Castro</div><div class="player-position">Ponta Esquerda</div></div>
+            <div class="player-card"><div class="player-number">9</div><div class="player-name">André Gonçalves</div><div class="player-position">Centroavante</div></div>
+            <div class="player-card"><div class="player-number">18</div><div class="player-name">Vinícius Costa</div><div class="player-position">Atacante</div></div>
+            <div class="player-card"><div class="player-number">15</div><div class="player-name">Diego Ferreira</div><div class="player-position">Volante</div></div>
+            <div class="player-card"><div class="player-number">22</div><div class="player-name">João Pedro</div><div class="player-position">Goleiro</div></div>
+        </div>
+    </section>
+
+    <!-- 3. TABELA COM INFORMAÇÕES RELEVANTES (dados estruturados: jogadores, posições e estatísticas) -->
+    <section>
+        <h2>📊 Estatísticas da Temporada</h2>
+        <p class="section-sub">Dados atualizados (Gols, Assistências e Partidas) – principais destaques</p>
+        <div class="stats-table-wrapper card">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Posição</th>
+                        <th>Gols</th>
+                        <th>Assistências</th>
+                        <th>Partidas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>André Gonçalves</td><td>Centroavante</td><td>12</td><td>4</td><td>21</td></tr>
+                    <tr><td>Bruno Alves</td><td>Meia Armador</td><td>5</td><td>9</td><td>23</td></tr>
+                    <tr><td>Lucas Mendonça</td><td>Ponta Direita</td><td>7</td><td>5</td><td>20</td></tr>
+                    <tr><td>Henrique Castro</td><td>Ponta Esquerda</td><td>6</td><td>6</td><td>22</td></tr>
+                    <tr><td>Matheus Duarte</td><td>Meia Central</td><td>3</td><td>2</td><td>19</td></tr>
+                    <tr><td>Rafael Lima</td><td>Volante</td><td>1</td><td>3</td><td>24</td></tr>
+                    <tr><td>Thiago Rocha</td><td>Zagueiro</td><td>2</td><td>0</td><td>18</td></tr>
+                    <tr><td>Vinícius Costa</td><td>Atacante</td><td>4</td><td>1</td><td>15</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 0.3rem;"><i class="fas fa-chart-line"></i> *Estatísticas considerando Campeonato Estadual + Copa Nacional.</p>
+    </section>
+
+    <!-- 4. PRÓXIMOS JOGOS (agenda) -->
+    <section>
+        <h2>🗓️ Próximos Compromissos</h2>
+        <div class="matches-list">
+            <div class="match-item">
+                <span class="match-date"><i class="far fa-calendar-alt"></i> 05/04/2025 - 16:00</span>
+                <span class="match-opponent"><strong>Aurora FC</strong> vs <strong>Real Minas</strong></span>
+                <span class="match-location"><i class="fas fa-stadium"></i> Estádio Celeste, BH</span>
+            </div>
+            <div class="match-item">
+                <span class="match-date"><i class="far fa-calendar-alt"></i> 12/04/2025 - 18:30</span>
+                <span class="match-opponent"><strong>Serra EC</strong> vs <strong>Aurora FC</strong></span>
+                <span class="match-location"><i class="fas fa-map-marker-alt"></i> Arena Serra, Nova Lima</span>
+            </div>
+            <div class="match-item">
+                <span class="match-date"><i class="far fa-calendar-alt"></i> 20/04/2025 - 19:00</span>
+                <span class="match-opponent"><strong>Aurora FC</strong> vs <strong>Atlético Leste</strong></span>
+                <span class="match-location"><i class="fas fa-stadium"></i> Estádio Celeste, BH</span>
+            </div>
+            <div class="match-item">
+                <span class="match-date"><i class="far fa-calendar-alt"></i> 27/04/2025 - 16:00</span>
+                <span class="match-opponent"><strong>Nacional FC</strong> vs <strong>Aurora FC</strong></span>
+                <span class="match-location"><i class="fas fa-map-marker-alt"></i> Estádio Parque do Sol</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CONTATO / REDES SOCIAIS -->
+    <section>
+        <h2>📱 Conecte-se com o Aurora</h2>
+        <div class="card contact-area">
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <div class="contact-email">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:contato@aurorafc.com.br">contato@aurorafc.com.br</a>
+            </div>
+            <div class="contact-email">
+                <i class="fas fa-phone-alt"></i>
+                <span>(31) 3555-1234</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESAFIO: Explicação sobre organização e separação de conteúdo informativo x dados estruturados -->
+    <details class="design-note">
+        <summary><i class="fas fa-lightbulb"></i> 📌 Como este projeto responde ao desafio de organização?</summary>
+        <p>
+            <strong>✅ Separação clara entre conteúdo informativo e dados estruturados:</strong> A seção de <strong>História</strong> utiliza prosa narrativa (parágrafos) – ideal para transmitir contexto, emoção e valores. Já os dados estruturados estão alocados em:
+            <br>🔹 <strong>Elenco atual:</strong> grade de cards (dados semi-estruturados) – cada jogador com atributos claros (número, posição, nome).  
+            <br>🔹 <strong>Tabela estatística:</strong> dados tabulares ricos (jogador, posição, gols, assistências, partidas) permitem comparação e análise rápida.  
+            <br>🔹 <strong>Próximos jogos</strong> e <strong>redes sociais</strong> seguem padrão de lista e links, separando informações operacionais.
+            <br><br>
+            <strong>🎯 Melhor forma de apresentar elenco e estatísticas:</strong> O elenco é exibido em cards visuais com destaque para número da camisa e posição, favorecendo leitura rápida e identificação dos atletas. As estatísticas são apresentadas em tabela responsiva com ordenação implícita, permitindo filtrar mentalmente por desempenho – a tabela entrega dados quantitativos de forma objetiva, enquanto os cards humanizam o elenco.
+            <br><br>
+            <strong>📐 Separação entre conteúdo informativo e dados organizados:</strong> A página utiliza hierarquia visual: blocos de texto (história) possuem fundo suave e tipografia fluida, enquanto as áreas de dados (grid de jogadores, tabela, lista de jogos) usam containers com bordas, sombras e espaçamentos distintos, além de ícones para rápida identificação. Essa diferenciação ajuda o usuário a compreender intuitivamente onde encontrar narrativa e onde extrair dados estruturados.
+        </p>
+    </details>
+
+    <footer>
+        <p><i class="far fa-copyright"></i> 2025 Aurora Futebol Clube – Paixão que inspira gerações. Site informativo | Dados atualizados periodicamente.</p>
+    </footer>
+</div>
+</body>
+</html>
